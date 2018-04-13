@@ -1,0 +1,4 @@
+apiVersion: "infinispan.banzaicloud.com/v1alpha1"
+kind: "Infinispan"
+metadata:
+  name: "example"
