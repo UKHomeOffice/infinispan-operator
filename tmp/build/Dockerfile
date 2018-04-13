@@ -1,6 +1,6 @@
 FROM alpine:3.6
 
-ADD tmp/_output/bin/inifinispan-operator /usr/local/bin/inifinispan-operator
+ADD tmp/_output/bin/infinispan-operator /usr/local/bin/infinispan-operator
 
-RUN adduser -D inifinispan-operator
-USER inifinispan-operator
+RUN adduser -D infinispan-operator
+USER infinispan-operator

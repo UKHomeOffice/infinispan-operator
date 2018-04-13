@@ -1,7 +1,7 @@
 package stub
 
 import (
-	"github.com/banzaicloud/inifinispan-operator/pkg/apis/infinispan/v1alpha1"
+	"github.com/banzaicloud/infinispan-operator/pkg/apis/infinispan/v1alpha1"
 
 	"github.com/coreos/operator-sdk/pkg/sdk/action"
 	"github.com/coreos/operator-sdk/pkg/sdk/handler"
@@ -44,8 +44,8 @@ func newbusyBoxPod(cr *v1alpha1.Infinispan) *v1.Pod {
 			APIVersion: "v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "busy-box",
-			Namespace:    "default",
+			Name:      "busy-box",
+			Namespace: "default",
 			OwnerReferences: []metav1.OwnerReference{
 				*metav1.NewControllerRef(cr, schema.GroupVersionKind{
 					Group:   v1alpha1.SchemeGroupVersion.Group,

@@ -4,7 +4,7 @@ import (
 	"context"
 	"runtime"
 
-	stub "github.com/banzaicloud/inifinispan-operator/pkg/stub"
+	stub "github.com/banzaicloud/infinispan-operator/pkg/stub"
 	sdk "github.com/coreos/operator-sdk/pkg/sdk"
 	sdkVersion "github.com/coreos/operator-sdk/version"
 
