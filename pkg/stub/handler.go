@@ -265,12 +265,12 @@ func serviceForInfinispan(i *v1alpha1.Infinispan) *v1.Service {
 			Selector: ls,
 			Ports: []v1.ServicePort{
 				{
-					Name: "management",
-					Port: 9990,
+					Name: "rest",
+					Port: 8080,
 				},
 				{
-					Name: "memcached",
-					Port: 11211,
+					Name: "management",
+					Port: 9990,
 				},
 			},
 		},
