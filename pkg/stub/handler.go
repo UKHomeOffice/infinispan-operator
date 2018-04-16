@@ -244,7 +244,7 @@ func getPodNames(pods []v1.Pod) []string {
 
 func serviceForInfinispan(i *v1alpha1.Infinispan) *v1.Service {
 	ls := labelsForInfinispan(i.Name)
-	return &v1.Service{
+	service := &v1.Service{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: "v1",
 			Kind:       "Service",
@@ -263,4 +263,6 @@ func serviceForInfinispan(i *v1alpha1.Infinispan) *v1.Service {
 			},
 		},
 	}
+	addOwnerRefToObject(service, asOwner(i))
+	return service
 }
