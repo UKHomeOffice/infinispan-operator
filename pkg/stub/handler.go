@@ -15,6 +15,7 @@ import (
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
+	intstr "k8s.io/apimachinery/pkg/util/intstr"
 )
 
 func NewHandler() handler.Handler {
@@ -88,7 +89,8 @@ func (h *Handler) Handle(ctx types.Context, event types.Event) error {
 func deploymentForInfinispan(i *v1alpha1.Infinispan) *appsv1.Deployment {
 	ls := labelsForInfinispan(i.Name)
 	replicas := i.Spec.Size
-
+	maxUnavailable := intstr.FromInt(1)
+	maxSurge := intstr.FromInt(1)
 	dep := &appsv1.Deployment{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: "apps/v1",
@@ -100,6 +102,13 @@ func deploymentForInfinispan(i *v1alpha1.Infinispan) *appsv1.Deployment {
 		},
 		Spec: appsv1.DeploymentSpec{
 			Replicas: &replicas,
+			Strategy: appsv1.DeploymentStrategy{
+				Type: appsv1.RollingUpdateDeploymentStrategyType,
+				RollingUpdate: &appsv1.RollingUpdateDeployment{
+					MaxUnavailable: &maxUnavailable,
+					MaxSurge:       &maxSurge,
+				},
+			},
 			Selector: &metav1.LabelSelector{
 				MatchLabels: ls,
 			},

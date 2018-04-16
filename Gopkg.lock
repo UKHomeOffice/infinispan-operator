@@ -22,6 +22,7 @@
     "pkg/sdk/action",
     "pkg/sdk/handler",
     "pkg/sdk/informer",
+    "pkg/sdk/query",
     "pkg/sdk/types",
     "pkg/util/k8sutil",
     "version"
@@ -402,6 +403,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "ee33e75bb6a841831e6fa7da07f4be118115fc32932715029dfd82f50282567c"
+  inputs-digest = "4b0d1e32d1c6d7e6fae21f021c8645c5ac017a711782083907487ab453300ac1"
   solver-name = "gps-cdcl"
   solver-version = 1
