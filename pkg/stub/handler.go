@@ -22,10 +22,10 @@ func NewHandler() handler.Handler {
 }
 
 type Handler struct {
-	// Fill me
 }
 
 func (h *Handler) Handle(ctx types.Context, event types.Event) error {
+	fmt.Printf("Handle: %+v %+v\n", event, event.Object)
 	switch o := event.Object.(type) {
 	case *v1alpha1.Infinispan:
 		infinispan := o
@@ -107,24 +107,31 @@ func deploymentForInfinispan(i *v1alpha1.Infinispan) *appsv1.Deployment {
 						Ports: []v1.ContainerPort{
 							{
 								ContainerPort: 8181,
+								Name:          "websocket",
 							},
 							{
 								ContainerPort: 9990,
+								Name:          "management",
 							},
 							{
 								ContainerPort: 11211,
+								Name:          "memcached",
 							},
 							{
 								ContainerPort: 11222,
-							},
-							{
-								ContainerPort: 57600,
+								Name:          "hotrod",
 							},
 							{
 								ContainerPort: 7600,
+								Name:          "jgroups",
+							},
+							{
+								ContainerPort: 57600,
+								Name:          "jgroups-fd",
 							},
 							{
 								ContainerPort: 8080,
+								Name:          "rest",
 							},
 						},
 						Env: []v1.EnvVar{{

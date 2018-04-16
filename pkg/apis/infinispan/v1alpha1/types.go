@@ -22,8 +22,8 @@ type Infinispan struct {
 }
 
 type InfinispanSpec struct {
-	Size int32
+	Size int32 `json:"size"`
 }
 type InfinispanStatus struct {
-	Nodes []string
+	Nodes []string `json:"nodes"`
 }
