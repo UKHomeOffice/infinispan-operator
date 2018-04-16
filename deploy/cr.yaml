@@ -3,4 +3,4 @@ kind: "Infinispan"
 metadata:
   name: "infinispan-example"
 spec:
-  size: 2
+  size: 3
