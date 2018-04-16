@@ -73,6 +73,13 @@ func (h *Handler) Handle(ctx types.Context, event types.Event) error {
 				return fmt.Errorf("failed to update infinispan status: %v", err)
 			}
 		}
+
+		// Create the Service for Infinispan
+		ser := serviceForInfinispan(infinispan)
+		err = action.Create(ser)
+		if err != nil && !apierrors.IsAlreadyExists(err) {
+			return fmt.Errorf("failed to create service: %v", err)
+		}
 	}
 	return nil
 }
@@ -134,15 +141,47 @@ func deploymentForInfinispan(i *v1alpha1.Infinispan) *appsv1.Deployment {
 								Name:          "rest",
 							},
 						},
-						Env: []v1.EnvVar{{
-							Name: "KUBERNETES_NAMESPACE",
-							ValueFrom: &v1.EnvVarSource{
-								FieldRef: &v1.ObjectFieldSelector{
-									APIVersion: "v1",
-									FieldPath:  "metadata.namespace",
+						Env: []v1.EnvVar{
+							{
+								Name: "KUBERNETES_NAMESPACE",
+								ValueFrom: &v1.EnvVarSource{
+									FieldRef: &v1.ObjectFieldSelector{
+										APIVersion: "v1",
+										FieldPath:  "metadata.namespace",
+									},
 								},
 							},
-						}},
+							{
+								Name:  "MGMT_USER",
+								Value: "admin",
+							},
+							{
+								Name:  "MGMT_PASS",
+								Value: "admin",
+							},
+						},
+						LivenessProbe: &v1.Probe{
+							Handler: v1.Handler{
+								Exec: &v1.ExecAction{
+									Command: []string{"/usr/local/bin/is_running.sh"},
+								}},
+							InitialDelaySeconds: 10,
+							TimeoutSeconds:      80,
+							PeriodSeconds:       60,
+							SuccessThreshold:    1,
+							FailureThreshold:    5,
+						},
+						ReadinessProbe: &v1.Probe{
+							Handler: v1.Handler{
+								Exec: &v1.ExecAction{
+									Command: []string{"/usr/local/bin/is_healthy.sh"},
+								}},
+							InitialDelaySeconds: 10,
+							TimeoutSeconds:      40,
+							PeriodSeconds:       30,
+							SuccessThreshold:    2,
+							FailureThreshold:    5,
+						},
 					}},
 				},
 			},
@@ -192,4 +231,27 @@ func getPodNames(pods []v1.Pod) []string {
 		podNames = append(podNames, pod.Name)
 	}
 	return podNames
+}
+
+func serviceForInfinispan(i *v1alpha1.Infinispan) *v1.Service {
+	ls := labelsForInfinispan(i.Name)
+	return &v1.Service{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: "v1",
+			Kind:       "Service",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      i.Name,
+			Namespace: i.Namespace,
+		},
+		Spec: v1.ServiceSpec{
+			Type:     v1.ServiceTypeNodePort,
+			Selector: ls,
+			Ports: []v1.ServicePort{
+				{
+					Port: 9990,
+				},
+			},
+		},
+	}
 }
