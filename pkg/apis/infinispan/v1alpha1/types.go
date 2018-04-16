@@ -22,8 +22,8 @@ type Infinispan struct {
 }
 
 type InfinispanSpec struct {
-	// Fill me
+	Size int32
 }
 type InfinispanStatus struct {
-	// Fill me
+	Nodes []string
 }
