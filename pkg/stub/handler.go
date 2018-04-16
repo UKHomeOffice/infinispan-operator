@@ -5,7 +5,6 @@ import (
 	"reflect"
 
 	"github.com/banzaicloud/infinispan-operator/pkg/apis/infinispan/v1alpha1"
-
 	"github.com/coreos/operator-sdk/pkg/sdk/action"
 	"github.com/coreos/operator-sdk/pkg/sdk/handler"
 	"github.com/coreos/operator-sdk/pkg/sdk/query"
@@ -266,7 +265,12 @@ func serviceForInfinispan(i *v1alpha1.Infinispan) *v1.Service {
 			Selector: ls,
 			Ports: []v1.ServicePort{
 				{
+					Name: "management",
 					Port: 9990,
+				},
+				{
+					Name: "memcached",
+					Port: 11211,
 				},
 			},
 		},
