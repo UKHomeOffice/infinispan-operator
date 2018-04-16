@@ -161,6 +161,14 @@ func deploymentForInfinispan(i *v1alpha1.Infinispan) *appsv1.Deployment {
 								},
 							},
 							{
+								Name:  "APP_USER",
+								Value: "user",
+							},
+							{
+								Name:  "APP_PASS",
+								Value: "changeme",
+							},
+							{
 								Name:  "MGMT_USER",
 								Value: "admin",
 							},
