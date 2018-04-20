@@ -119,6 +119,7 @@ func deploymentForInfinispan(i *v1alpha1.Infinispan) *appsv1.Deployment {
 					Containers: []v1.Container{{
 						Image: "jboss/infinispan-server:latest",
 						Name:  "infinispan-server",
+						Args:  []string{"cloud", "-Djboss.default.jgroups.stack=kubernetes"},
 						Ports: []v1.ContainerPort{
 							{
 								ContainerPort: 8181,
