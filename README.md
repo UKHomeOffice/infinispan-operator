@@ -7,6 +7,13 @@ The operator itself is built with the: https://github.com/operator-framework/ope
 Usage:
 
 ```bash
+mkdir -p $GOPATH/src/github.com/banzaicloud
+cd $GOPATH/src/github.com/banzaicloud
+git clone git@github.com:banzaicloud/infinispan-operator.git
+cd infinispan-operator
+
+operator-sdk build banzaicloud/infinispan-operator
+
 kubectl apply -f deploy
 
 kubectl get pods
