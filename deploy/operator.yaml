@@ -31,4 +31,4 @@ spec:
           image: banzaicloud/infinispan-operator
           command:
           - infinispan-operator
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
