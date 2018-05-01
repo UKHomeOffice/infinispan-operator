@@ -4,7 +4,10 @@ This Operator runs an Infinispan cluster based on this blog article: https://blo
 
 The operator itself is built with the: https://github.com/operator-framework/operator-sdk
 
-Usage:
+## Requirements:
+ - Install the Operator SDK first: https://github.com/operator-framework/operator-sdk#quick-start
+
+## Usage:
 
 ```bash
 mkdir -p $GOPATH/src/github.com/banzaicloud
