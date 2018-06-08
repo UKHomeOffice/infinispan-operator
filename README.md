@@ -8,6 +8,8 @@ The main benefit of this Operator is without deeper Kubernetes or Helm and Infin
 
 Nodes are joining together with JGroups configured to use `KUBE_PING` protocol which finds each Pod running an Infinispan server based on labels and namespace. You can use the default standalone Full HA configuration for Kubernetes.
 
+Infinispan REST and Management endpoints are exposed as `Kubernetes` Services. Infinispan is continuously monitored with by Kubernetes through the built-in Infinispan health checks. 
+
 ## Requirements:
  - Install the Operator SDK first: https://github.com/operator-framework/operator-sdk#quick-start
 
